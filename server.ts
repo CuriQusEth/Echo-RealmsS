@@ -9,8 +9,36 @@ async function startServer() {
 
   app.use(express.json());
 
+  const TOOLS = [
+    {
+      name: "get_race_status",
+      description: "Get the current status of a race",
+      inputSchema: { type: "object", properties: { raceId: { type: "string" } }, required: ["raceId"] }
+    },
+    {
+      name: "start_race",
+      description: "Start a new race",
+      inputSchema: { type: "object", properties: { trackId: { type: "string" } }, required: ["trackId"] }
+    },
+    {
+      name: "get_leaderboard",
+      description: "Get the race leaderboard",
+      inputSchema: { type: "object", properties: { raceId: { type: "string" } }, required: ["raceId"] }
+    },
+    {
+      name: "optimize_speed",
+      description: "Optimize vehicle speed",
+      inputSchema: { type: "object", properties: { vehicleId: { type: "string" } }, required: ["vehicleId"] }
+    },
+    {
+      name: "get_track_info",
+      description: "Get info about a track",
+      inputSchema: { type: "object", properties: { trackId: { type: "string" } }, required: ["trackId"] }
+    }
+  ];
+
   // AI Agent & MCP Integration Endpoints
-  app.get("/api/mcp", (req, res) => {
+  const handleMcpGet = (req: express.Request, res: express.Response) => {
     res.json({
       protocol: "MCP",
       version: "1.0.0",
@@ -20,10 +48,41 @@ async function startServer() {
       capabilities: ["multi-realm-management", "echo-mechanics", "game-automation"],
       timestamp: new Date().toISOString()
     });
-  });
+  };
 
-  app.post("/api/mcp", (req, res) => {
+  const handleMcpPost = (req: express.Request, res: express.Response) => {
     try {
+      const body = req.body;
+      const { method, params } = body || {};
+
+      if (method === 'initialize') {
+        return res.json({
+          protocolVersion: "1.0.0",
+          capabilities: { tools: {}, prompts: {}, resources: {} },
+          serverInfo: { name: "Echo Realms MCP Endpoint", version: "1.0.0" }
+        });
+      }
+
+      if (method === 'tools/list') {
+        return res.json({ tools: TOOLS });
+      }
+
+      if (method === 'tools/call') {
+        return res.json({
+          status: "success",
+          message: `Tool ${params?.name} executed successfully`,
+          result: { status: "OK", tool: params?.name }
+        });
+      }
+
+      if (method === 'prompts/list') {
+        return res.json({ prompts: [] });
+      }
+
+      if (method === 'resources/list') {
+        return res.json({ resources: [] });
+      }
+
       res.json({
         status: "success",
         message: "MCP command received",
@@ -34,9 +93,9 @@ async function startServer() {
     } catch (error) {
       res.status(400).json({ error: "Invalid MCP request" });
     }
-  });
+  };
 
-  app.get("/api/agent", (req, res) => {
+  const handleAgentGet = (req: express.Request, res: express.Response) => {
     res.json({
       name: "Echo Realms Orchestrator",
       status: "active",
@@ -44,7 +103,29 @@ async function startServer() {
       platform: "Echo Realms",
       version: "1.0.0"
     });
-  });
+  };
+
+  const handleAgentPost = (req: express.Request, res: express.Response) => {
+    try {
+      res.json({
+        status: "success",
+        message: "Agent command received",
+        payload: req.body
+      });
+    } catch (error) {
+      res.status(400).json({ error: "Invalid agent request" });
+    }
+  };
+
+  app.get("/api/mcp", handleMcpGet);
+  app.post("/api/mcp", handleMcpPost);
+  app.get("/app/api/mcp", handleMcpGet);
+  app.post("/app/api/mcp", handleMcpPost);
+
+  app.get("/api/agent", handleAgentGet);
+  app.post("/api/agent", handleAgentPost);
+  app.get("/app/api/agent", handleAgentGet);
+  app.post("/app/api/agent", handleAgentPost);
 
   // Serve the well-known Agent Card manually
   app.get("/.well-known/agent-card.json", (req, res) => {

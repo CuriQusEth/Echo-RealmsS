@@ -10,3 +10,16 @@ export async function GET() {
     version: "1.0.0"
   });
 }
+
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    return NextResponse.json({
+      status: "success",
+      message: "Agent command received",
+      payload: body
+    });
+  } catch (error) {
+    return NextResponse.json({ error: "Invalid agent request" }, { status: 400 });
+  }
+}
