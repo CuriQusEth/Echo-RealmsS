@@ -29,6 +29,16 @@ const TOOLS = [
   }
 ];
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export async function OPTIONS(req: Request) {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
+
 export async function GET() {
   return NextResponse.json({
     protocol: "MCP",
@@ -38,7 +48,7 @@ export async function GET() {
     description: "Active MCP server for Echo Realms Orchestrator Agent",
     capabilities: ["multi-realm-management", "echo-mechanics", "game-automation"],
     timestamp: new Date().toISOString()
-  });
+  }, { headers: corsHeaders });
 }
 
 export async function POST(req: Request) {
@@ -51,11 +61,11 @@ export async function POST(req: Request) {
         protocolVersion: "1.0.0",
         capabilities: { tools: {}, prompts: {}, resources: {} },
         serverInfo: { name: "Echo Realms MCP Endpoint", version: "1.0.0" }
-      });
+      }, { headers: corsHeaders });
     }
 
     if (method === 'tools/list') {
-      return NextResponse.json({ tools: TOOLS });
+      return NextResponse.json({ tools: TOOLS }, { headers: corsHeaders });
     }
 
     if (method === 'tools/call') {
@@ -63,15 +73,15 @@ export async function POST(req: Request) {
         status: "success",
         message: `Tool ${params?.name} executed successfully`,
         result: { status: "OK", tool: params?.name }
-      });
+      }, { headers: corsHeaders });
     }
 
     if (method === 'prompts/list') {
-      return NextResponse.json({ prompts: [] });
+      return NextResponse.json({ prompts: [] }, { headers: corsHeaders });
     }
 
     if (method === 'resources/list') {
-      return NextResponse.json({ resources: [] });
+      return NextResponse.json({ resources: [] }, { headers: corsHeaders });
     }
 
     return NextResponse.json({
@@ -80,8 +90,8 @@ export async function POST(req: Request) {
       agent: "Echo Realms Orchestrator",
       receivedAt: new Date().toISOString(),
       payload: body
-    });
+    }, { headers: corsHeaders });
   } catch (error) {
-    return NextResponse.json({ error: "Invalid MCP request" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid MCP request" }, { status: 400, headers: corsHeaders });
   }
 }

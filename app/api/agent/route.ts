@@ -1,6 +1,16 @@
 // @ts-nocheck
 import { NextResponse } from 'next/server';
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export async function OPTIONS(req: Request) {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
+
 export async function GET() {
   return NextResponse.json({
     name: "Echo Realms Orchestrator",
@@ -8,7 +18,7 @@ export async function GET() {
     wallet: "0x29536D0bc1004ab274c4F0F59734Ad74D4559b7B",
     platform: "Echo Realms",
     version: "1.0.0"
-  });
+  }, { headers: corsHeaders });
 }
 
 export async function POST(req: Request) {
@@ -18,8 +28,8 @@ export async function POST(req: Request) {
       status: "success",
       message: "Agent command received",
       payload: body
-    });
+    }, { headers: corsHeaders });
   } catch (error) {
-    return NextResponse.json({ error: "Invalid agent request" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid agent request" }, { status: 400, headers: corsHeaders });
   }
 }
