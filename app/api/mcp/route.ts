@@ -54,42 +54,61 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { method, params } = body;
+    const { method, params, id } = body || {};
 
     if (method === 'initialize') {
       return NextResponse.json({
-        protocolVersion: "1.0.0",
-        capabilities: { tools: {}, prompts: {}, resources: {} },
-        serverInfo: { name: "Echo Realms MCP Endpoint", version: "1.0.0" }
+        jsonrpc: "2.0",
+        id,
+        result: {
+          protocolVersion: "2024-11-05",
+          capabilities: { tools: {}, prompts: {}, resources: {} },
+          serverInfo: { name: "Echo Realms MCP Endpoint", version: "1.0.0" }
+        }
       }, { headers: corsHeaders });
     }
 
     if (method === 'tools/list') {
-      return NextResponse.json({ tools: TOOLS }, { headers: corsHeaders });
+      return NextResponse.json({
+        jsonrpc: "2.0",
+        id,
+        result: { tools: TOOLS }
+      }, { headers: corsHeaders });
     }
 
     if (method === 'tools/call') {
       return NextResponse.json({
-        status: "success",
-        message: `Tool ${params?.name} executed successfully`,
-        result: { status: "OK", tool: params?.name }
+        jsonrpc: "2.0",
+        id,
+        result: {
+          content: [
+            { type: "text", text: `Tool ${params?.name} executed successfully with params ${JSON.stringify(params?.arguments || {})}` }
+          ],
+          isError: false
+        }
       }, { headers: corsHeaders });
     }
 
     if (method === 'prompts/list') {
-      return NextResponse.json({ prompts: [] }, { headers: corsHeaders });
+      return NextResponse.json({
+        jsonrpc: "2.0",
+        id,
+        result: { prompts: [] }
+      }, { headers: corsHeaders });
     }
 
     if (method === 'resources/list') {
-      return NextResponse.json({ resources: [] }, { headers: corsHeaders });
+      return NextResponse.json({
+        jsonrpc: "2.0",
+        id,
+        result: { resources: [] }
+      }, { headers: corsHeaders });
     }
 
     return NextResponse.json({
-      status: "success",
-      message: "MCP command received",
-      agent: "Echo Realms Orchestrator",
-      receivedAt: new Date().toISOString(),
-      payload: body
+      jsonrpc: "2.0",
+      id,
+      error: { code: -32601, message: "Method not found" }
     }, { headers: corsHeaders });
   } catch (error) {
     return NextResponse.json({ error: "Invalid MCP request" }, { status: 400, headers: corsHeaders });

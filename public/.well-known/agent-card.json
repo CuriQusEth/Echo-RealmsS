@@ -35,6 +35,20 @@
     "realm-orchestration",
     "mcp-command-execution"
   ],
+  "skills": [
+    {
+      "name": "multi-realm-management",
+      "description": "Manage interconnected realms using sound echoes"
+    },
+    {
+      "name": "echo-mechanics",
+      "description": "Calculate and deploy echo pulses to reveal hidden paths"
+    },
+    {
+      "name": "game-automation",
+      "description": "Automate routine operations and leaderboard tracking"
+    }
+  ],
   "supportedChains": ["eip155:8453"],
   "active": true,
   "status": "online"
