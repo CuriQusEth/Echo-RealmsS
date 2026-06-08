@@ -17,7 +17,7 @@ export default function TitleScreen() {
       exit={{ opacity: 0 }}
     >
       <motion.div 
-        className="w-full max-w-md flex flex-col items-center text-center space-y-8"
+        className="w-full max-w-md flex flex-col items-center text-center space-y-12"
         initial={{ y: 20 }}
         animate={{ y: 0 }}
       >
@@ -27,27 +27,27 @@ export default function TitleScreen() {
             animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
             transition={{ repeat: Infinity, duration: 4 }}
           />
-          <h1 className="text-6xl font-serif italic mb-1 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 relative z-10">
+          <h1 className="text-6xl font-['Cinzel'] font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-br from-cyan-300 via-purple-300 to-amber-200 relative z-10 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]">
             Echo Realms
           </h1>
         </div>
 
-        <p className="text-[12px] uppercase tracking-[0.2em] text-white/50">
-          Listen to the silence. Reveal the hidden.
+        <p className="text-xs uppercase tracking-[0.3em] text-cyan-100/60 font-['Cinzel'] font-bold">
+          Listen to the silence.<br/>Reveal the hidden.
         </p>
 
-        <div className="flex flex-col w-full gap-4 pt-8">
+        <div className="flex flex-col w-full gap-5 pt-8">
           <button 
-            onClick={() => setGameState('playing')}
-            className="w-full py-4 rounded-full font-bold tracking-widest text-[#0a0514] bg-cyan-500 hover:bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all active:scale-95 uppercase text-sm"
+            onClick={() => setGameState('hub')}
+            className="w-full py-4 rounded-xl font-bold tracking-widest text-[#0a0514] bg-gradient-to-r from-cyan-400 to-purple-400 hover:opacity-90 shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all active:scale-95 uppercase text-sm font-['Cinzel']"
           >
-            Enter the Realm
+            Enter the Realm Hub
           </button>
 
           {isConnected ? (
             <button 
               onClick={() => disconnect()}
-              className="w-full py-4 rounded-full font-bold tracking-widest text-purple-400 border border-purple-500/30 bg-purple-900/20 hover:bg-purple-900/40 transition-all active:scale-95 uppercase text-sm"
+              className="w-full py-4 rounded-xl font-bold tracking-widest text-purple-300 border border-purple-500/30 bg-[#120a24]/60 backdrop-blur-md hover:bg-purple-900/40 transition-all active:scale-95 uppercase text-sm font-['Cinzel']"
             >
               Disconnect Wallet
             </button>
@@ -60,7 +60,7 @@ export default function TitleScreen() {
                   alert("No supported wallet extension found.");
                 }
               }}
-              className="w-full py-4 rounded-full font-bold tracking-widest text-cyan-400 border border-cyan-500/30 bg-purple-900/20 hover:bg-purple-900/40 transition-all active:scale-95 uppercase text-sm"
+              className="w-full py-4 rounded-xl font-bold tracking-widest text-cyan-300 border border-cyan-500/30 bg-[#120a24]/60 backdrop-blur-md hover:bg-cyan-900/40 transition-all active:scale-95 uppercase text-sm font-['Cinzel']"
             >
               Connect Wallet
             </button>

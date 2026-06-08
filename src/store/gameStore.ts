@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type GameState = 'menu' | 'playing' | 'realm_complete' | 'leaderboard';
+export type GameState = 'title' | 'hub' | 'playing' | 'realm_complete' | 'leaderboard' | 'journal';
 
 export interface ParticleState {
   id: string;
@@ -16,20 +16,26 @@ interface GameStore {
   gameState: GameState;
   score: number;
   longestRun: number;
+  echoCombo: number;
+  maxEchoCombo: number;
   currentRealm: number;
   isHintActive: boolean;
   
   setGameState: (state: GameState) => void;
   incrementScore: (amount: number) => void;
+  incrementCombo: () => void;
+  resetCombo: () => void;
   advanceRealm: () => void;
   toggleHint: () => void;
   resetGame: () => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
-  gameState: 'menu',
+  gameState: 'title',
   score: 0,
   longestRun: 0,
+  echoCombo: 0,
+  maxEchoCombo: 0,
   currentRealm: 1,
   isHintActive: false,
 
@@ -39,6 +45,16 @@ export const useGameStore = create<GameStore>((set) => ({
     score: state.score + amount,
     longestRun: Math.max(state.longestRun, state.currentRealm)
   })),
+
+  incrementCombo: () => set((state) => {
+    const nextCombo = state.echoCombo + 1;
+    return {
+      echoCombo: nextCombo,
+      maxEchoCombo: Math.max(state.maxEchoCombo, nextCombo)
+    };
+  }),
+
+  resetCombo: () => set({ echoCombo: 0 }),
   
   advanceRealm: () => set((state) => ({ currentRealm: state.currentRealm + 1 })),
   toggleHint: () => set((state) => ({ isHintActive: !state.isHintActive })),
@@ -46,6 +62,7 @@ export const useGameStore = create<GameStore>((set) => ({
   resetGame: () => set({
     gameState: 'playing',
     score: 0,
+    echoCombo: 0,
     currentRealm: 1,
     isHintActive: false
   })
