@@ -23,7 +23,11 @@ export default function Leaderboard() {
         <h2 className="text-3xl font-['Cinzel'] font-bold mb-1 text-center text-amber-400">
           Greatest Walkers
         </h2>
-        <p className="text-[10px] uppercase tracking-[0.2em] text-center text-white/40 mb-6">On-Chain Resonance</p>
+        <div className="flex items-center justify-center gap-2 mb-6">
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+          <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-mono">Denim 200ms Canonical Sync</p>
+        </div>
+
 
         <div className="flex-1 overflow-y-auto pr-2 space-y-3 custom-scrollbar">
           {mockLeaderboard.map((entry) => (

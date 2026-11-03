@@ -25,9 +25,19 @@ export default function EchoJournal() {
               "We learned to see without eyes. The echo is the brush, and the realm is the canvas. Where silence falls, nothing exists."
             </p>
           </div>
+
+          <div className="p-4 rounded-xl bg-cyan-900/20 border border-cyan-500/20">
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="font-['Cinzel'] text-sm text-cyan-200">The Denim Epoch</h4>
+              <span className="text-[9px] font-mono text-cyan-400 bg-cyan-950/60 px-1.5 py-0.5 rounded border border-cyan-500/30">200ms Native</span>
+            </div>
+            <p className="text-xs text-white/70 leading-relaxed font-serif">
+              "Flashblocks and pending illusions have dissolved into the canonical stream. The Base realm now beats with a native 200ms pulse. Every echo settles directly into true on-chain permanence."
+            </p>
+          </div>
           
           <div className="p-4 rounded-xl bg-cyan-900/10 border border-cyan-500/10">
-            <h4 className="font-['Cinzel'] text-sm text-cyan-200/50 mb-2">???</h4>
+            <h4 className="font-['Cinzel'] text-sm text-cyan-200/50 mb-2">The Astral Gateway</h4>
             <p className="text-xs text-white/30 leading-relaxed italic">
               Record locked. Discover deeper realms.
             </p>

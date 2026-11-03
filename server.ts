@@ -73,7 +73,7 @@ async function startServer() {
   const handleMcpPost = (req: express.Request, res: express.Response) => {
     try {
       const body = req.body;
-      const { method, params } = body || {};
+      const { id = null, method, params } = body || {};
 
       if (method === 'initialize') {
         return res.json({

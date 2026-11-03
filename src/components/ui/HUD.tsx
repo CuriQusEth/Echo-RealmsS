@@ -1,11 +1,14 @@
 import React from 'react';
 import { useGameStore } from '../../store/gameStore';
-import { useAccount, useSendTransaction } from 'wagmi';
+import { useAccount } from 'wagmi';
 import { Menu } from 'lucide-react';
+import { useDenimLiveBlocks } from '../../lib/denim';
 
 export default function HUD() {
   const { currentRealm, score, echoCombo, setGameState } = useGameStore();
-  const { isConnected, address } = useAccount();
+  const { address } = useAccount();
+  const { latestBlock } = useDenimLiveBlocks();
+
 
   return (
     <div className="absolute top-0 left-0 w-full p-4 md:p-6 pointer-events-none z-10 flex flex-col justify-between h-full">
@@ -42,8 +45,21 @@ export default function HUD() {
           )}
         </div>
 
-        {/* Address & App-level GM button spacing */}
-        <div className="flex flex-col items-end gap-3 pointer-events-auto pt-14">
+        {/* Address & Denim 200ms block indicator */}
+        <div className="flex flex-col items-end gap-2 pointer-events-auto pt-14">
+          <div className="px-2.5 py-1 bg-cyan-950/60 border border-cyan-500/30 rounded-lg flex items-center gap-2 backdrop-blur-md text-[10px]">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75 duration-200"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+            </span>
+            <span className="font-['Cinzel'] text-cyan-300 font-bold tracking-wider">Denim 200ms</span>
+            {latestBlock && (
+              <span className="font-mono text-cyan-200/80 border-l border-cyan-500/20 pl-1.5">
+                #{latestBlock.toString().slice(-4)}
+              </span>
+            )}
+          </div>
+
           {address && (
             <div className="pl-2 pr-3 py-1.5 bg-purple-900/20 border border-purple-500/30 rounded-full flex items-center gap-2 backdrop-blur-md hidden sm:flex">
               <div className="w-4 h-4 rounded-full bg-gradient-to-tr from-cyan-500 to-purple-600"></div>

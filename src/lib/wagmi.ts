@@ -1,9 +1,12 @@
 import { http, createConfig } from 'wagmi'
-import { base } from 'wagmi/chains'
+import { base, baseSepolia } from 'wagmi/chains'
 
 export const wagmiConfig = createConfig({
-  chains: [base],
+  chains: [base, baseSepolia],
   transports: {
-    [base.id]: http(),
+    [base.id]: http(undefined, { batch: true }),
+    [baseSepolia.id]: http(undefined, { batch: true }),
   },
+  pollingInterval: 200, // Denim 200ms native canonical blocks
 })
+

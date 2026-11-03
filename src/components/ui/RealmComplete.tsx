@@ -96,6 +96,11 @@ export default function RealmComplete() {
               )}
               {isConnected ? 'Record This Journey On-Chain' : 'Connect Wallet to Record'}
             </button>
+            <div className="flex items-center justify-center gap-1.5 text-[10px] text-cyan-300/70 font-['Cinzel']">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+              <span>Settles in 200ms canonical blocks on Base Denim</span>
+            </div>
+
 
             <button 
               onClick={handleNextRealm}
