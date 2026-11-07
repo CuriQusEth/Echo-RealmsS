@@ -36,6 +36,12 @@ export default function TitleScreen() {
           Listen to the silence.<br/>Reveal the hidden.
         </p>
 
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-400/30 text-[10px] text-cyan-300 font-mono">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Base Mainnet • Denim 200ms Active</span>
+        </div>
+
+
         <div className="flex flex-col w-full gap-5 pt-8">
           <button 
             onClick={() => setGameState('hub')}

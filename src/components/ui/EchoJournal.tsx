@@ -28,13 +28,14 @@ export default function EchoJournal() {
 
           <div className="p-4 rounded-xl bg-cyan-900/20 border border-cyan-500/20">
             <div className="flex items-center justify-between mb-2">
-              <h4 className="font-['Cinzel'] text-sm text-cyan-200">The Denim Epoch</h4>
-              <span className="text-[9px] font-mono text-cyan-400 bg-cyan-950/60 px-1.5 py-0.5 rounded border border-cyan-500/30">200ms Native</span>
+              <h4 className="font-['Cinzel'] text-sm text-cyan-200">The Denim Mainnet Era</h4>
+              <span className="text-[9px] font-mono text-cyan-400 bg-cyan-950/60 px-1.5 py-0.5 rounded border border-cyan-500/30">Nov 5, 2026 Live</span>
             </div>
             <p className="text-xs text-white/70 leading-relaxed font-serif">
-              "Flashblocks and pending illusions have dissolved into the canonical stream. The Base realm now beats with a native 200ms pulse. Every echo settles directly into true on-chain permanence."
+              "Denim is live on Base Mainnet. Flashblocks subscriptions, websocket streams, and pending state have retired. Canonical 200ms blocks now anchor all echoes with immediate on-chain finality."
             </p>
           </div>
+
           
           <div className="p-4 rounded-xl bg-cyan-900/10 border border-cyan-500/10">
             <h4 className="font-['Cinzel'] text-sm text-cyan-200/50 mb-2">The Astral Gateway</h4>

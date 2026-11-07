@@ -47,18 +47,19 @@ export default function HUD() {
 
         {/* Address & Denim 200ms block indicator */}
         <div className="flex flex-col items-end gap-2 pointer-events-auto pt-14">
-          <div className="px-2.5 py-1 bg-cyan-950/60 border border-cyan-500/30 rounded-lg flex items-center gap-2 backdrop-blur-md text-[10px]">
+          <div className="px-2.5 py-1 bg-cyan-950/70 border border-cyan-400/40 rounded-lg flex items-center gap-2 backdrop-blur-md text-[10px] shadow-[0_0_15px_rgba(34,211,238,0.2)]">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75 duration-200"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
             </span>
-            <span className="font-['Cinzel'] text-cyan-300 font-bold tracking-wider">Denim 200ms</span>
+            <span className="font-['Cinzel'] text-cyan-200 font-bold tracking-wider">Base Mainnet (200ms)</span>
             {latestBlock && (
-              <span className="font-mono text-cyan-200/80 border-l border-cyan-500/20 pl-1.5">
-                #{latestBlock.toString().slice(-4)}
+              <span className="font-mono text-cyan-300 font-semibold border-l border-cyan-500/30 pl-1.5">
+                #{latestBlock.toString()}
               </span>
             )}
           </div>
+
 
           {address && (
             <div className="pl-2 pr-3 py-1.5 bg-purple-900/20 border border-purple-500/30 rounded-full flex items-center gap-2 backdrop-blur-md hidden sm:flex">

@@ -13,27 +13,38 @@ import { base, baseSepolia } from 'viem/chains';
 import { useState, useEffect } from 'react';
 
 export interface DenimConfig {
+  network: string;
+  chainId: number;
   blockTimeMs: number;
   chain: typeof base | typeof baseSepolia;
   isDenimActive: boolean;
+  activationDate: string;
+  flashblocksRetired: boolean;
+  rpcUrl: string;
 }
 
 export const DENIM_SPECS: DenimConfig = {
+  network: 'Base Mainnet',
+  chainId: 8453,
   blockTimeMs: 200, // 200ms native canonical blocks
   chain: base,
   isDenimActive: true,
+  activationDate: 'November 5, 2026, 18:00 UTC',
+  flashblocksRetired: true,
+  rpcUrl: 'https://mainnet.base.org',
 };
 
 /**
- * Denim canonical client configured with 200ms polling cadence
+ * Denim canonical client configured for Base Mainnet with 200ms polling cadence
  */
 export const denimPublicClient = createPublicClient({
   chain: base,
-  transport: http(),
+  transport: http('https://mainnet.base.org', { batch: true }),
   pollingInterval: 200, // Tuned for 200ms native blocks
 });
 
 export type DenimClient = typeof denimPublicClient;
+
 
 /**
  * Denim Migration RPC Wrapper
@@ -132,6 +143,8 @@ export function useDenimLiveBlocks() {
     isSynced,
     lastTick,
     blockTimeTarget: DENIM_SPECS.blockTimeMs,
-    networkName: 'Base Denim (200ms Canonical)',
+    networkName: 'Base Mainnet (Denim 200ms)',
+    isMainnet: true,
+    specs: DENIM_SPECS,
   };
 }

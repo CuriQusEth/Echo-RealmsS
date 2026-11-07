@@ -1,9 +1,12 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { useGameStore } from '../../store/gameStore';
+import { useDenimLiveBlocks } from '../../lib/denim';
 
 export default function RealmHub() {
   const { setGameState, currentRealm } = useGameStore();
+  const { latestBlock } = useDenimLiveBlocks();
+
 
   return (
     <motion.div 
@@ -33,23 +36,35 @@ export default function RealmHub() {
           </button>
         </div>
 
-        {/* Denim 200ms Native Block Status Card */}
-        <div className="p-4 rounded-xl bg-cyan-950/30 border border-cyan-500/20 backdrop-blur-md flex items-center justify-between text-xs">
-          <div className="flex items-center gap-3">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75 duration-200"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400"></span>
-            </span>
-            <div>
-              <div className="font-['Cinzel'] font-bold text-cyan-200 text-xs">Base Denim Network</div>
-              <div className="text-[10px] text-cyan-400/70">200ms Native Canonical Blocks</div>
+        {/* Denim Mainnet 200ms Native Block Status Card */}
+        <div className="p-4 rounded-xl bg-[#0e1628]/90 border border-cyan-400/30 backdrop-blur-md flex flex-col gap-2.5 shadow-[0_0_25px_rgba(34,211,238,0.15)]">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 duration-200"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+              </span>
+              <div>
+                <div className="font-['Cinzel'] font-bold text-cyan-100 text-xs flex items-center gap-2">
+                  <span>Base Mainnet</span>
+                  <span className="text-[9px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded border border-cyan-500/30">Denim Active</span>
+                </div>
+                <div className="text-[10px] text-cyan-300/70 font-mono">200ms Canonical Blocks (Chain ID 8453)</div>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-[9px] uppercase tracking-wider text-emerald-400 font-bold">Mainnet Live</div>
+              <div className="text-cyan-200 font-mono text-[11px] font-bold">
+                {latestBlock ? `#${latestBlock.toString()}` : '200ms Sync'}
+              </div>
             </div>
           </div>
-          <div className="text-right">
-            <div className="text-[10px] uppercase tracking-wider text-white/50">Flashblocks Migrated</div>
-            <div className="text-cyan-300 font-mono text-[11px] font-bold">200ms Canonical</div>
+          <div className="pt-2 border-t border-cyan-500/10 flex items-center justify-between text-[10px] text-white/50">
+            <span>Activated Nov 5, 2026</span>
+            <span className="text-purple-300 font-mono">Flashblocks Retired • 100% Canonical</span>
           </div>
         </div>
+
 
 
         <div className="grid grid-cols-2 gap-4">
